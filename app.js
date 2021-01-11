@@ -1,10 +1,10 @@
 const firstScore = document.querySelector('#firstScore');
 const secondScore = document.querySelector('#secondScore');
 const playingTo = document.querySelector('select');
-let gameLevel = parseInt(document.querySelector('option').value);
+let winningScore = parseInt(document.querySelector('option').value);
 const btn_1 = document.querySelector('#btn_1');
 const btn_2 = document.querySelector('#btn_2');
-const reset = document.querySelector('#reset');
+const playAgain = document.querySelector('#reset');
 
 btn_1.addEventListener('click', function () {
   firstScore.innerText = parseInt(firstScore.innerText) + 1;
@@ -16,29 +16,28 @@ btn_2.addEventListener('click', function () {
   gameOver();
 });
 
-reset.addEventListener('click', function () {
+playAgain.addEventListener('click', reset);
+
+function reset() {
   firstScore.innerText = 0;
   secondScore.innerText = 0;
   btn_1.disabled = false;
   btn_2.disabled = false;
   firstScore.style.color = null;
   secondScore.style.color = null;
-});
+}
 
 playingTo.addEventListener('change', function (e) {
-  gameLevel = parseInt(gameLevelValue(e.target.options));
+  reset();
+  winningScore = parseInt(this.value);
 });
 
-const gameLevelValue = (options) => {
-  return options[options.selectedIndex].innerText;
-};
-
-const gameOver = () => {
+function gameOver() {
   if (
-    parseInt(firstScore.innerText) === gameLevel ||
-    parseInt(secondScore.innerText) === gameLevel
+    parseInt(firstScore.innerText) === winningScore ||
+    parseInt(secondScore.innerText) === winningScore
   ) {
-    if (parseInt(firstScore.innerText) === gameLevel) {
+    if (parseInt(firstScore.innerText) === winningScore) {
       firstScore.style.color = 'green';
       secondScore.style.color = 'red';
       btn_1.disabled = true;
@@ -50,4 +49,4 @@ const gameOver = () => {
       btn_2.disabled = true;
     }
   }
-};
+}
